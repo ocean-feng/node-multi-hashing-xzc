@@ -33,17 +33,51 @@
 #include <string.h>
 #include <stdio.h>
 #include "Lyra2.h"
+#include "sha3/sph_blake.h"
+#include "sha3/sph_cubehash.h"
+#include "sha3/sph_keccak.h"
+#include "sha3/sph_skein.h"
+#include "sha3/sph_bmw.h"
 
 void lyra2rev2_hash(const char* input, char* output, uint32_t height)
 {
 
-    uint32_t hashB[8];
+	sph_blake256_context     ctx_blake;
+    sph_bmw256_context       ctx_bmw;
+    sph_keccak256_context    ctx_keccak;
+    sph_skein256_context     ctx_skein;
+    sph_cubehash256_context  ctx_cube;
+    uint32_t hashA[8], hashB[8];
 
+    sph_blake256_init(&ctx_blake);
+    sph_blake256 (&ctx_blake, input, 80);
+    sph_blake256_close (&ctx_blake, hashA);
 
-	LYRA2((void*)hashB, 32, (const void*)input, 80, (const void*)input, 80, 2, height, 256);
+    sph_keccak256_init(&ctx_keccak);
+    sph_keccak256 (&ctx_keccak,hashA, 32);
+    sph_keccak256_close(&ctx_keccak, hashB);
 
+	sph_cubehash256_init(&ctx_cube);
+	sph_cubehash256(&ctx_cube, hashB, 32);
+	sph_cubehash256_close(&ctx_cube, hashA);
 
-	memcpy(output, hashB, 32);
+	LYRA2(hashB, 32, hashA, 32, hashA, 32, 1, 4, 4);
+
+	sph_skein256_init(&ctx_skein);
+    sph_skein256 (&ctx_skein, hashB, 32);
+    sph_skein256_close(&ctx_skein, hashA);
+
+	sph_cubehash256_init(&ctx_cube);
+	sph_cubehash256(&ctx_cube, hashA, 32);
+	sph_cubehash256_close(&ctx_cube, hashB);
+
+    sph_bmw256_init(&ctx_bmw);
+    sph_bmw256 (&ctx_bmw, hashB, 32);
+    sph_bmw256_close(&ctx_bmw, hashA);
+
+//printf("cpu hash %08x %08x %08x %08x\n",hashA[0],hashA[1],hashA[2],hashA[3]);
+
+	memcpy(output, hashA, 32);
 }
 
 
