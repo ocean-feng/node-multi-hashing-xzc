@@ -28,6 +28,7 @@ extern "C" {
     #include "Lyra2REV2.h"
     #include "Lyra2Z.h"
     #include "sia.h"
+    #include "cryptonight.h"
 }
 
 #define THROW_ERROR_EXCEPTION(x) Nan::ThrowTypeError(x)
@@ -565,6 +566,38 @@ NAN_METHOD(sia) {
 	info.GetReturnValue().Set(Nan::CopyBuffer(output, 32).ToLocalChecked());
 }
 
+NAN_METHOD(cryptonight) {
+    NanScope();
+
+    bool fast = false;
+
+    if (info.Length() < 1)
+        return THROW_ERROR_EXCEPTION("You must provide one argument.");
+    
+    if (info.Length() >= 2) {
+        if(!info[1]->IsBoolean())
+            return THROW_ERROR_EXCEPTION("Argument 2 should be a boolean");
+        fast = info[1]->ToBoolean()->BooleanValue();
+    }
+
+    Local<Object> target = info[0]->ToObject();
+
+    if(!Buffer::HasInstance(target))
+        return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
+
+    char * input = Buffer::Data(target);
+    char output[32];
+    
+    uint32_t input_len = Buffer::Length(target);
+
+    if(fast)
+        cryptonight_fast_hash(input, output, input_len);
+    else
+        cryptonight_hash(input, output, input_len);
+
+    info.GetReturnValue().Set(Nan::CopyBuffer(output, 32).ToLocalChecked());
+}
+
 void init(Handle<Object> exports) {
     exports->Set(Nan::New("quark").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(quark)->GetFunction());
     exports->Set(Nan::New("x11").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(x11)->GetFunction());
@@ -590,6 +623,7 @@ void init(Handle<Object> exports) {
     exports->Set(Nan::New("lyra2rev2").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(lyra2rev2)->GetFunction());
     exports->Set(Nan::New("lyra2z").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(lyra2z)->GetFunction());
     exports->Set(Nan::New("sia").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(sia)->GetFunction());
+    exports->Set(Nan::New("cryptonight").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(cryptonight)->GetFunction());
 }
 
 NODE_MODULE(multihashing, init)
