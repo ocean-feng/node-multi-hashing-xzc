@@ -566,30 +566,30 @@ NAN_METHOD(sia) {
 }
 
 void init(Handle<Object> exports) {
-    exports->Set(Nan::CopyBuffer("quark").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(quark)->GetFunction());
-    exports->Set(Nan::CopyBuffer("x11").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(x11)->GetFunction());
-    exports->Set(Nan::CopyBuffer("scrypt").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(scrypt)->GetFunction());
-    exports->Set(Nan::CopyBuffer("scryptn").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(scryptn)->GetFunction());
-    exports->Set(Nan::CopyBuffer("scryptjane").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(scryptjane)->GetFunction());
-    exports->Set(Nan::CopyBuffer("keccak").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(keccak)->GetFunction());
-    exports->Set(Nan::CopyBuffer("bcrypt").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(bcrypt)->GetFunction());
-    exports->Set(Nan::CopyBuffer("skein").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(skein)->GetFunction());
-    exports->Set(Nan::CopyBuffer("groestl").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(groestl)->GetFunction());
-    exports->Set(Nan::CopyBuffer("groestlmyriad").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(groestlmyriad)->GetFunction());
-    exports->Set(Nan::CopyBuffer("blake").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(blake)->GetFunction());
-    exports->Set(Nan::CopyBuffer("fugue").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(fugue)->GetFunction());
-    exports->Set(Nan::CopyBuffer("qubit").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(qubit)->GetFunction());
-    exports->Set(Nan::CopyBuffer("hefty1").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(hefty1)->GetFunction());
-    exports->Set(Nan::CopyBuffer("shavite3").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(shavite3)->GetFunction());
-    exports->Set(Nan::CopyBuffer("x13").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(x13)->GetFunction());
-    exports->Set(Nan::CopyBuffer("nist5").ToLocalChecked(),Nan::CopyBuffer<v8::FunctionTemplate>(nist5)->GetFunction());
-    exports->Set(Nan::CopyBuffer("sha1").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(sha1)->GetFunction());
-    exports->Set(Nan::CopyBuffer("x15").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(x15)->GetFunction());
-    exports->Set(Nan::CopyBuffer("fresh").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(fresh)->GetFunction());
-    exports->Set(Nan::CopyBuffer("lyra2re").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(lyra2re)->GetFunction());
-    exports->Set(Nan::CopyBuffer("lyra2rev2").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(lyra2rev2)->GetFunction());
-    exports->Set(Nan::CopyBuffer("lyra2z").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(lyra2z)->GetFunction());
-    exports->Set(Nan::CopyBuffer("sia").ToLocalChecked(), Nan::CopyBuffer<v8::FunctionTemplate>(sia)->GetFunction());
+    exports->Set(Nan::New("quark").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(quark)->GetFunction());
+    exports->Set(Nan::New("x11").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(x11)->GetFunction());
+    exports->Set(Nan::New("scrypt").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(scrypt)->GetFunction());
+    exports->Set(Nan::New("scryptn").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(scryptn)->GetFunction());
+    exports->Set(Nan::New("scryptjane").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(scryptjane)->GetFunction());
+    exports->Set(Nan::New("keccak").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(keccak)->GetFunction());
+    exports->Set(Nan::New("bcrypt").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(bcrypt)->GetFunction());
+    exports->Set(Nan::New("skein").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(skein)->GetFunction());
+    exports->Set(Nan::New("groestl").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(groestl)->GetFunction());
+    exports->Set(Nan::New("groestlmyriad").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(groestlmyriad)->GetFunction());
+    exports->Set(Nan::New("blake").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(blake)->GetFunction());
+    exports->Set(Nan::New("fugue").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(fugue)->GetFunction());
+    exports->Set(Nan::New("qubit").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(qubit)->GetFunction());
+    exports->Set(Nan::New("hefty1").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(hefty1)->GetFunction());
+    exports->Set(Nan::New("shavite3").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(shavite3)->GetFunction());
+    exports->Set(Nan::New("x13").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(x13)->GetFunction());
+    exports->Set(Nan::New("nist5").ToLocalChecked(),Nan::New<v8::FunctionTemplate>(nist5)->GetFunction());
+    exports->Set(Nan::New("sha1").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(sha1)->GetFunction());
+    exports->Set(Nan::New("x15").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(x15)->GetFunction());
+    exports->Set(Nan::New("fresh").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(fresh)->GetFunction());
+    exports->Set(Nan::New("lyra2re").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(lyra2re)->GetFunction());
+    exports->Set(Nan::New("lyra2rev2").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(lyra2rev2)->GetFunction());
+    exports->Set(Nan::New("lyra2z").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(lyra2z)->GetFunction());
+    exports->Set(Nan::New("sia").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(sia)->GetFunction());
 }
 
 NODE_MODULE(multihashing, init)
