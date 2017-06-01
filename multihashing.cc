@@ -644,7 +644,7 @@ void init(Handle<Object> exports) {
     exports->Set(Nan::New("lyra2rev2").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(lyra2rev2)->GetFunction());
     exports->Set(Nan::New("lyra2z").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(lyra2z)->GetFunction());
     exports->Set(Nan::New("sia").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(sia)->GetFunction());
-    exports->Set(Nan::New("decred").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(sia)->GetFunction());
+    exports->Set(Nan::New("decred").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(decred)->GetFunction());
     exports->Set(Nan::New("cryptonight").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(cryptonight)->GetFunction());
 }
 
