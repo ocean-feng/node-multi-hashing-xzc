@@ -29,6 +29,7 @@ extern "C" {
     #include "Lyra2Z.h"
     #include "sia.h"
     #include "cryptonight.h"
+    #include "decred.h"
 }
 
 #define THROW_ERROR_EXCEPTION(x) Nan::ThrowTypeError(x)
@@ -598,6 +599,26 @@ NAN_METHOD(cryptonight) {
     info.GetReturnValue().Set(Nan::CopyBuffer(output, 32).ToLocalChecked());
 }
 
+NAN_METHOD(decred) {
+    NanScope();
+
+    if (info.Length() < 1)
+        return THROW_ERROR_EXCEPTION("You must provide one argument.");
+
+    Local<Object> target = info[0]->ToObject();
+
+    if(!Buffer::HasInstance(target))
+        return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
+
+    char * input = Buffer::Data(target);
+    uint32_t input_len = Buffer::Length(target);
+    char output[32];
+
+    decred_hash(input, output);
+
+    info.GetReturnValue().Set(Nan::CopyBuffer(output, 32).ToLocalChecked());
+}
+
 void init(Handle<Object> exports) {
     exports->Set(Nan::New("quark").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(quark)->GetFunction());
     exports->Set(Nan::New("x11").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(x11)->GetFunction());
@@ -623,6 +644,7 @@ void init(Handle<Object> exports) {
     exports->Set(Nan::New("lyra2rev2").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(lyra2rev2)->GetFunction());
     exports->Set(Nan::New("lyra2z").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(lyra2z)->GetFunction());
     exports->Set(Nan::New("sia").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(sia)->GetFunction());
+    exports->Set(Nan::New("decred").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(sia)->GetFunction());
     exports->Set(Nan::New("cryptonight").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(cryptonight)->GetFunction());
 }
 
