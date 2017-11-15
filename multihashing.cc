@@ -32,6 +32,7 @@ extern "C" {
     #include "decred.h"
     #include "lbry.h"
     #include "pascal.h"
+    #include "hsr.h"
 }
 
 #define THROW_ERROR_EXCEPTION(x) Nan::ThrowTypeError(x)
@@ -80,6 +81,27 @@ NAN_METHOD(x11) {
     x11_hash(input, output, input_len);
 
 	info.GetReturnValue().Set(Nan::CopyBuffer(output, 32).ToLocalChecked());
+}
+
+NAN_METHOD(hsr) {
+    NanScope();
+
+    if (info.Length() < 1)
+        return THROW_ERROR_EXCEPTION("You must provide one argument.");
+
+    Local<Object> target = info[0]->ToObject();
+
+    if(!Buffer::HasInstance(target))
+        return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
+
+    char * input = Buffer::Data(target);
+    char output[32];
+
+    uint32_t input_len = Buffer::Length(target);
+
+    hsr_hash(input, output, input_len);
+
+    info.GetReturnValue().Set(Nan::CopyBuffer(output, 32).ToLocalChecked());
 }
 
 NAN_METHOD(scrypt) {
@@ -664,6 +686,7 @@ NAN_METHOD(pascal) {
 void init(Handle<Object> exports) {
     exports->Set(Nan::New("quark").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(quark)->GetFunction());
     exports->Set(Nan::New("x11").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(x11)->GetFunction());
+    exports->Set(Nan::New("hsr").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(hsr)->GetFunction());
     exports->Set(Nan::New("scrypt").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(scrypt)->GetFunction());
     exports->Set(Nan::New("scryptn").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(scryptn)->GetFunction());
     exports->Set(Nan::New("scryptjane").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(scryptjane)->GetFunction());
